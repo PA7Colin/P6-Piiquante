@@ -16,4 +16,4 @@ const sauceSchema = mongoose.Schema({
 
 sauceSchema.plugin(mongooseUniqueValidator);
 
-module.exports = mongoose.model('Sauce', sauceSchema);
+module.exports = mongoose.model('Sauce', sauceSchema); 
