@@ -37,7 +37,7 @@ exports.login = (req, res, next) => {
                 // Utilisation de la fonction sign de jsonwebtoken pour chiffrer un nouveau token.
                 token: jwt.sign(
                     {userId : user._id},
-                    'RANDOM_TOKEN_SECRET',
+                    process.env.TOKEN_KEY,
                     {expiresIn: '24h'}
                     )
                 });
