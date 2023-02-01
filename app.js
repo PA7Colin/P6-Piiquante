@@ -2,19 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
-//imoort de dotenv
+//SECURITE
 const dotenv = require('dotenv');
 dotenv.config();
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 
-const app = express();
-
+// ROUTES
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
+const app = express();
+
 // CONNEXION A LA BASE DE DONNES MONGOOSE
-mongoose.connect('mongodb+srv://user1:8oKV4fUZR7RS77MN@clusterp6.uvwfy23.mongodb.net/?retryWrites=true&w=majority',
-{ useNewUrlParser: true,
-    useUnifiedTopology: true })
+mongoose.connect(process.env.MONGOOSE_URL)
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
         
@@ -28,6 +29,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// HELMET POUR SECURISER LES HEADERS et mongoSanitize pour securisezr les injections NoSQL
+app.use(helmet({
+    crossOriginResourcePolicy: true,
+}));
+app.use(mongoSanitize());
+
+// USE ROUTES
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
