@@ -33,6 +33,9 @@ app.use((req, res, next) => {
 app.use(helmet({
     crossOriginResourcePolicy: true,
 }));
+// BUG IMAGES
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// INJECTION NO SQL
 app.use(mongoSanitize());
 
 // USE ROUTES
