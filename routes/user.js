@@ -4,6 +4,7 @@ const router = express.Router();
 
 // RECUP DES CONTROLLERS USER 
 const userCtrl = require('../controllers/user');
+const pwd = require('../middleware/password');
 
 //ROUTES
 router.post('/signup', userCtrl.signup);
